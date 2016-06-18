@@ -1,11 +1,11 @@
 'use strict';
 
-const extension = require('./extension');
+const libExt = require('library-extensions');
 const ifFalse = require('./if-false');
 
 const delay = (time, val) => new Promise(res => setTimeout(() => res(val), time));
 
-module.exports = extension('retry', (promise, fn, cond, options) => {
+module.exports = libExt.create('retry', (promise, fn, cond, options) => {
   options = Object.assign({
     retries: 1,
     interval: () => 1000

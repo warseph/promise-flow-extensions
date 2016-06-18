@@ -1,8 +1,8 @@
 'use strict';
 
-const extension = require('./extension');
+const libExt = require('library-extensions');
 
-module.exports = extension('rethrow', (promise, fn) => promise.catch(error => {
+module.exports = libExt.create('rethrow', (promise, fn) => promise.catch(error => {
   fn(error);
   throw error;
 }));

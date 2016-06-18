@@ -1,6 +1,6 @@
 {
   "name": "promise-flow-extensions",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Extends the Promise object with some additional utility functions",
   "main": "index.js",
   "scripts": {
@@ -36,5 +36,8 @@
     "mocha-circleci-reporter": "0.0.1",
     "sinon": "^1.17.4",
     "sinon-chai": "^2.8.0"
+  },
+  "dependencies": {
+    "library-extensions": "^1.0.0"
   }
 }

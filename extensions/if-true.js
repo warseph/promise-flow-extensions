@@ -1,8 +1,8 @@
 'use strict';
 
-const extension = require('./extension');
+const libExt = require('library-extensions');
 
-module.exports = extension('ifTrue', (promise, condition, fn) => {
+module.exports = libExt.create('ifTrue', (promise, condition, fn) => {
   if (!fn) {
     fn = condition;
     condition = v => v;
