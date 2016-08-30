@@ -7,5 +7,5 @@ module.exports = libExt.create('ifFalse', (promise, condition, fn) => {
     fn = condition;
     condition = v => v;
   }
-  return promise.then(result => condition(result) && result || fn(result));
+  return promise.then(result => condition(result) ? result : fn(result));
 });

@@ -1,16 +1,12 @@
 'use strict';
-/* eslint-env node, mocha */
-/* global expect, sinon */
-/* eslint prefer-arrow-callback: 0 */
-require('../helper');
 
 const retry = require('../../extensions/retry');
 
-describe('Retry', function () {
+describe('Retry', () => {
   const promise = Promise.resolve(0);
   retry.extend(promise);
 
-  it('should execute only once if the condition passes', function () {
+  it('should execute only once if the condition passes', () => {
     const fn = sinon.spy(v => v + 1);
     const condition = sinon.spy(v => v === 1);
     const test = promise.retry(fn, condition);
@@ -19,7 +15,7 @@ describe('Retry', function () {
       .then(() => expect(condition).to.have.been.calledOnce);
   });
 
-  it('should retry if the condition fails', function () {
+  it('should retry if the condition fails', () => {
     let i = 1;
     const fn = sinon.spy(v => v + i++);
     const condition = sinon.spy(v => v === 2);
@@ -30,7 +26,7 @@ describe('Retry', function () {
       .then(() => expect(condition).to.have.been.calledTwice);
   });
 
-  it('should fail if the attempts run out', function () {
+  it('should fail if the attempts run out', () => {
     let i = 1;
     const fn = sinon.spy(v => v + i++);
     const condition = sinon.spy(v => v === 3);
