@@ -43,13 +43,12 @@ eventually2.ifTrue(v => v > 1, v => v - 1)
 ### Removing the extensions
 You can reset an extended object (i.e. remove all the added methods) by running
 ```js
-const Rx = require('rx');
-const RxFlowExt = require('rx-flow-extensions');
-RxFlowExt.extend(Rx.Observable.prototype);
-RxFlowExt.reset(Rx.Observable.prototype);
+const promiseFlowExt = require('promise-flow-extensions');
+promiseFlowExt.extend(Promise.prototype);
+promiseFlowExt.reset(Promise.prototype);
 
-const obs = Rx.Observable.just(1);
-obs.just(2) // obs.just is not a function
+const promise = Promise.resolve(1);
+promise.rethrow(() => null) // promise.rethrow is not a function
   .then(console.log);
 ```
 
