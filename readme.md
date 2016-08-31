@@ -16,7 +16,7 @@ The library can be used in three ways
 ```js
 const promiseFlowExt = require('promise-flow-extensions');
 
-promiseFlowExt.ifTrue(Promise.resolve(2), v => v > 1, v => v - 1)
+promiseFlowExt.if(Promise.resolve(2), {condition: v => v > 1, true: v => v - 1})
   .then(console.log); // 1
 ```
 **Important!** when using functions this way, the first parameter is always the
@@ -27,7 +27,7 @@ const promiseFlowExt = require('promise-flow-extensions');
 
 const eventually2 = Promise.resolve(2);
 promiseFlowExt.extend(eventually2);
-eventually2.ifTrue(v => v > 1, v => v - 1)
+eventually2.if({condition: v => v > 1, true: v => v - 1})
   .then(console.log); // 1
 ```
 ### Extending all promises
@@ -36,7 +36,7 @@ const promiseFlowExt = require('promise-flow-extensions');
 promiseFlowExt.extend(Promise.prototype);
 
 const eventually2 = Promise.resolve(2);
-eventually2.ifTrue(v => v > 1, v => v - 1)
+eventually2.if({condition: v => v > 1, true: v => v - 1})
   .then(console.log); // 1
 ```
 
@@ -67,15 +67,22 @@ Promise.reject(new Error('test'))
   .catch(e => /* actually handle the error */);
 ```
 
-## `ifTrue([condition], function)` / `ifFalse([condition], function)`
-Executes the passed function if the promise is true (or false for isFalse).
-If a condition function was provided, it will execute it according to that
-result. Both the function and the condition receive the promise value
-(i.e. as in `.then`).
+## `if(trueFn | {condition, true, false})`
+Executes the passed function if the promise is true.
+Instead of a function you can provide an object, specify up to 3 values, if any
+of those values isn't specified, the default is the identity function, i.e.
+`v => v`
+  - condition: a function that will be used to evaluate if the promise result
+    is true/false
+  - true: The function that will be executed when the condition is true
+  - false: The function that will be executed when the condition is false
 ```js
 Promise.resolve('test')
-  .ifTrue(v => v === 'test', v => v + ' ok!') // 'test ok!'
-  .ifFalse(v => v !== 'test ok!', v => 'this is never called')
+  .if({
+    condition: v => v === 'test',
+    true: v => v + ' ok!',
+    false: v => 'this is never called'
+  }) // 'test ok!'
   .then(console.log); // 'test ok!'
 ```
 
